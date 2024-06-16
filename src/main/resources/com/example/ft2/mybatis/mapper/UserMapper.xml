@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ft2.mybatis.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.example.ft2.mybatis.po.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="rank" jdbcType="INTEGER" property="rank" />
+    <result column="room_id" jdbcType="VARCHAR" property="roomId" />
+    <result column="t2_id" jdbcType="VARCHAR" property="t2Id" />
+    <result column="twitter_nickname" jdbcType="VARCHAR" property="twitterNickname" />
+    <result column="points" jdbcType="INTEGER" property="points" />
+    <result column="twitter_uid" jdbcType="VARCHAR" property="twitterUid" />
+    <result column="twitter_username" jdbcType="VARCHAR" property="twitterUsername" />
+    <result column="balance_level" jdbcType="INTEGER" property="balanceLevel" />
+    <result column="date_str" jdbcType="VARCHAR" property="dateStr" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.ft2.mybatis.po.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (rank, room_id, t2_id, 
+      twitter_nickname, points, twitter_uid, 
+      twitter_username, balance_level, date_str, 
+      create_time)
+    values (#{rank,jdbcType=INTEGER}, #{roomId,jdbcType=VARCHAR}, #{t2Id,jdbcType=VARCHAR}, 
+      #{twitterNickname,jdbcType=VARCHAR}, #{points,jdbcType=INTEGER}, #{twitterUid,jdbcType=VARCHAR}, 
+      #{twitterUsername,jdbcType=VARCHAR}, #{balanceLevel,jdbcType=INTEGER}, #{dateStr,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.ft2.mybatis.po.User">
+    update user
+    set rank = #{rank,jdbcType=INTEGER},
+      room_id = #{roomId,jdbcType=VARCHAR},
+      t2_id = #{t2Id,jdbcType=VARCHAR},
+      twitter_nickname = #{twitterNickname,jdbcType=VARCHAR},
+      points = #{points,jdbcType=INTEGER},
+      twitter_uid = #{twitterUid,jdbcType=VARCHAR},
+      twitter_username = #{twitterUsername,jdbcType=VARCHAR},
+      balance_level = #{balanceLevel,jdbcType=INTEGER},
+      date_str = #{dateStr,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, rank, room_id, t2_id, twitter_nickname, points, twitter_uid, twitter_username, 
+    balance_level, date_str, create_time
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, rank, room_id, t2_id, twitter_nickname, points, twitter_uid, twitter_username, 
+    balance_level, date_str, create_time
+    from user
+  </select>
+</mapper>
