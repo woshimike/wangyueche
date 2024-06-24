@@ -6,6 +6,10 @@ import java.util.*;
 import java.util.Timer;
 import javax.swing.*;
 
+/**
+ * 贪吃蛇游戏
+ * 加油
+ */
 public class SnakeGame extends JPanel implements ActionListener {
     
     private final int WIDTH = 300;
