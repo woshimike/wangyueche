@@ -1,7 +1,7 @@
 package com.example.ft2.db.mapper;
 
-import com.example.acoustic.db.entity.DailyData;
-import com.example.acoustic.db.entity.DailyDataExample;
+import com.example.ft2.db.entity.DailyData;
+import com.example.ft2.db.entity.DailyDataExample;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 

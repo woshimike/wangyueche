@@ -1,7 +1,7 @@
 package com.example.ft2.db.mapper;
 
-import com.example.acoustic.db.entity.UserConsumeRecord;
-import com.example.acoustic.db.entity.UserConsumeRecordExample;
+import com.example.ft2.db.entity.UserConsumeRecord;
+import com.example.ft2.db.entity.UserConsumeRecordExample;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 

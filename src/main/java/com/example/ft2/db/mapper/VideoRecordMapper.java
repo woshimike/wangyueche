@@ -1,7 +1,7 @@
 package com.example.ft2.db.mapper;
 
-import com.example.acoustic.db.entity.VideoRecord;
-import com.example.acoustic.db.entity.VideoRecordExample;
+import com.example.ft2.db.entity.VideoRecord;
+import com.example.ft2.db.entity.VideoRecordExample;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
