@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.acoustic.db.mapper.DailyDataMapper" >
+  <resultMap id="BaseResultMap" type="com.example.acoustic.db.entity.DailyData" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_num" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="incr_user_num" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="total_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="used_num" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="recharge_amount" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="login_num" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="rihuo_num" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="system_total_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="create_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_num, incr_user_num, total_time, used_num, recharge_amount, login_num, rihuo_num, 
+    system_total_time, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.acoustic.db.entity.DailyDataExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_daily_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_daily_data
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_daily_data
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.acoustic.db.entity.DailyDataExample" >
+    delete from t_daily_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.acoustic.db.entity.DailyData" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_daily_data (user_num, incr_user_num, total_time, 
+      used_num, recharge_amount, login_num, 
+      rihuo_num, system_total_time, create_time
+      )
+    values (#{userNum,jdbcType=BIGINT}, #{incrUserNum,jdbcType=BIGINT}, #{totalTime,jdbcType=BIGINT}, 
+      #{usedNum,jdbcType=BIGINT}, #{rechargeAmount,jdbcType=BIGINT}, #{loginNum,jdbcType=BIGINT}, 
+      #{rihuoNum,jdbcType=BIGINT}, #{systemTotalTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.acoustic.db.entity.DailyData" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_daily_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userNum != null" >
+        user_num,
+      </if>
+      <if test="incrUserNum != null" >
+        incr_user_num,
+      </if>
+      <if test="totalTime != null" >
+        total_time,
+      </if>
+      <if test="usedNum != null" >
+        used_num,
+      </if>
+      <if test="rechargeAmount != null" >
+        recharge_amount,
+      </if>
+      <if test="loginNum != null" >
+        login_num,
+      </if>
+      <if test="rihuoNum != null" >
+        rihuo_num,
+      </if>
+      <if test="systemTotalTime != null" >
+        system_total_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userNum != null" >
+        #{userNum,jdbcType=BIGINT},
+      </if>
+      <if test="incrUserNum != null" >
+        #{incrUserNum,jdbcType=BIGINT},
+      </if>
+      <if test="totalTime != null" >
+        #{totalTime,jdbcType=BIGINT},
+      </if>
+      <if test="usedNum != null" >
+        #{usedNum,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeAmount != null" >
+        #{rechargeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="loginNum != null" >
+        #{loginNum,jdbcType=BIGINT},
+      </if>
+      <if test="rihuoNum != null" >
+        #{rihuoNum,jdbcType=BIGINT},
+      </if>
+      <if test="systemTotalTime != null" >
+        #{systemTotalTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.acoustic.db.entity.DailyDataExample" resultType="java.lang.Integer" >
+    select count(*) from t_daily_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_daily_data
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userNum != null" >
+        user_num = #{record.userNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.incrUserNum != null" >
+        incr_user_num = #{record.incrUserNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalTime != null" >
+        total_time = #{record.totalTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.usedNum != null" >
+        used_num = #{record.usedNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.rechargeAmount != null" >
+        recharge_amount = #{record.rechargeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.loginNum != null" >
+        login_num = #{record.loginNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.rihuoNum != null" >
+        rihuo_num = #{record.rihuoNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.systemTotalTime != null" >
+        system_total_time = #{record.systemTotalTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_daily_data
+    set id = #{record.id,jdbcType=BIGINT},
+      user_num = #{record.userNum,jdbcType=BIGINT},
+      incr_user_num = #{record.incrUserNum,jdbcType=BIGINT},
+      total_time = #{record.totalTime,jdbcType=BIGINT},
+      used_num = #{record.usedNum,jdbcType=BIGINT},
+      recharge_amount = #{record.rechargeAmount,jdbcType=BIGINT},
+      login_num = #{record.loginNum,jdbcType=BIGINT},
+      rihuo_num = #{record.rihuoNum,jdbcType=BIGINT},
+      system_total_time = #{record.systemTotalTime,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.acoustic.db.entity.DailyData" >
+    update t_daily_data
+    <set >
+      <if test="userNum != null" >
+        user_num = #{userNum,jdbcType=BIGINT},
+      </if>
+      <if test="incrUserNum != null" >
+        incr_user_num = #{incrUserNum,jdbcType=BIGINT},
+      </if>
+      <if test="totalTime != null" >
+        total_time = #{totalTime,jdbcType=BIGINT},
+      </if>
+      <if test="usedNum != null" >
+        used_num = #{usedNum,jdbcType=BIGINT},
+      </if>
+      <if test="rechargeAmount != null" >
+        recharge_amount = #{rechargeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="loginNum != null" >
+        login_num = #{loginNum,jdbcType=BIGINT},
+      </if>
+      <if test="rihuoNum != null" >
+        rihuo_num = #{rihuoNum,jdbcType=BIGINT},
+      </if>
+      <if test="systemTotalTime != null" >
+        system_total_time = #{systemTotalTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.acoustic.db.entity.DailyData" >
+    update t_daily_data
+    set user_num = #{userNum,jdbcType=BIGINT},
+      incr_user_num = #{incrUserNum,jdbcType=BIGINT},
+      total_time = #{totalTime,jdbcType=BIGINT},
+      used_num = #{usedNum,jdbcType=BIGINT},
+      recharge_amount = #{rechargeAmount,jdbcType=BIGINT},
+      login_num = #{loginNum,jdbcType=BIGINT},
+      rihuo_num = #{rihuoNum,jdbcType=BIGINT},
+      system_total_time = #{systemTotalTime,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.example.acoustic.db.entity.DailyDataExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_daily_data
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
