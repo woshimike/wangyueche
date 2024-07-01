@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.acoustic.db.mapper.DailyDataMapper" >
-  <resultMap id="BaseResultMap" type="com.example.acoustic.db.entity.DailyData" >
+  <resultMap id="BaseResultMap" type="com.example.ft2.db.entity.DailyData" >
     <constructor >
       <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="user_num" jdbcType="BIGINT" javaType="java.lang.Long" />
