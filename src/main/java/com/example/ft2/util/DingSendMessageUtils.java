@@ -22,6 +22,7 @@ public class DingSendMessageUtils {
         try {
             Map<String, String> content = new HashMap<>();
             content.put("content", "Haha:这些用户有开通：" + msg);
+            content.put("qwe","qwe");
 
 
             Map<String, Object> paramMap = new HashMap<>();

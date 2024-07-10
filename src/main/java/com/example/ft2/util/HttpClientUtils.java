@@ -264,10 +264,10 @@ public class HttpClientUtils {
 
     /**
      * 构建请求的 url
-     *
-     * @param host
-     * @param path
-     * @param querys
+     * 123
+     * @param host 主网
+     * @param path 路径
+     * @param querys 参数
      * @return
      */
     private static String buildUrl(String host, String path, Map<String, String> querys)
