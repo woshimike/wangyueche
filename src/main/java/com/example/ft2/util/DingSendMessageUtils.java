@@ -21,7 +21,7 @@ public class DingSendMessageUtils {
     public static void sendMarkdown(RestTemplate restTemplate, String msg) {
         try {
             Map<String, String> content = new HashMap<>();
-            content.put("content", "Haha:这些用户有开通：" + msg);
+            content.put("content", "就是:这些用户有开通：" + msg);
             content.put("qwe","qwe");
 
 
@@ -37,7 +37,7 @@ public class DingSendMessageUtils {
                     .build();
 
             String result = okHttpClient.newCall(request).execute().body().string();
-            log.info("钉钉接口返回:========{}", result);
+            log.info("钉钉接口返回:===000！！！====={}", result);
         } catch (Exception e) {
             log.error("{}", e);
         }
