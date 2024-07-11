@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ft2.db.mapper.SendScoreMapper" >
+  <resultMap id="BaseResultMap" type="com.example.ft2.db.entity.SendScore" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="send_user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="score" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="send_date_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="socre_key" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="receive_user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="receive_date_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, send_user_id, score, send_date_time, socre_key, receive_user_id, receive_date_time, 
+    status, type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.acoustic.db.entity.SendScoreExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_send_score
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_send_score
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_send_score
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.acoustic.db.entity.SendScoreExample" >
+    delete from t_send_score
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.acoustic.db.entity.SendScore" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_send_score (send_user_id, score, send_date_time, 
+      socre_key, receive_user_id, receive_date_time, 
+      status, type)
+    values (#{sendUserId,jdbcType=BIGINT}, #{score,jdbcType=INTEGER}, #{sendDateTime,jdbcType=BIGINT}, 
+      #{socreKey,jdbcType=VARCHAR}, #{receiveUserId,jdbcType=BIGINT}, #{receiveDateTime,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.acoustic.db.entity.SendScore" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_send_score
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sendUserId != null" >
+        send_user_id,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="sendDateTime != null" >
+        send_date_time,
+      </if>
+      <if test="socreKey != null" >
+        socre_key,
+      </if>
+      <if test="receiveUserId != null" >
+        receive_user_id,
+      </if>
+      <if test="receiveDateTime != null" >
+        receive_date_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sendUserId != null" >
+        #{sendUserId,jdbcType=BIGINT},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="sendDateTime != null" >
+        #{sendDateTime,jdbcType=BIGINT},
+      </if>
+      <if test="socreKey != null" >
+        #{socreKey,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUserId != null" >
+        #{receiveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="receiveDateTime != null" >
+        #{receiveDateTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.acoustic.db.entity.SendScoreExample" resultType="java.lang.Integer" >
+    select count(*) from t_send_score
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_send_score
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.sendUserId != null" >
+        send_user_id = #{record.sendUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.score != null" >
+        score = #{record.score,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendDateTime != null" >
+        send_date_time = #{record.sendDateTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.socreKey != null" >
+        socre_key = #{record.socreKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiveUserId != null" >
+        receive_user_id = #{record.receiveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.receiveDateTime != null" >
+        receive_date_time = #{record.receiveDateTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_send_score
+    set id = #{record.id,jdbcType=BIGINT},
+      send_user_id = #{record.sendUserId,jdbcType=BIGINT},
+      score = #{record.score,jdbcType=INTEGER},
+      send_date_time = #{record.sendDateTime,jdbcType=BIGINT},
+      socre_key = #{record.socreKey,jdbcType=VARCHAR},
+      receive_user_id = #{record.receiveUserId,jdbcType=BIGINT},
+      receive_date_time = #{record.receiveDateTime,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.acoustic.db.entity.SendScore" >
+    update t_send_score
+    <set >
+      <if test="sendUserId != null" >
+        send_user_id = #{sendUserId,jdbcType=BIGINT},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="sendDateTime != null" >
+        send_date_time = #{sendDateTime,jdbcType=BIGINT},
+      </if>
+      <if test="socreKey != null" >
+        socre_key = #{socreKey,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUserId != null" >
+        receive_user_id = #{receiveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="receiveDateTime != null" >
+        receive_date_time = #{receiveDateTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.acoustic.db.entity.SendScore" >
+    update t_send_score
+    set send_user_id = #{sendUserId,jdbcType=BIGINT},
+      score = #{score,jdbcType=INTEGER},
+      send_date_time = #{sendDateTime,jdbcType=BIGINT},
+      socre_key = #{socreKey,jdbcType=VARCHAR},
+      receive_user_id = #{receiveUserId,jdbcType=BIGINT},
+      receive_date_time = #{receiveDateTime,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.example.acoustic.db.entity.SendScoreExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_send_score
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

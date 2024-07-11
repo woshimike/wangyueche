@@ -52,7 +52,7 @@ public class T2ServiceImpl {
     //@Scheduled(cron = "*/20 * * * * ?")
     @PostConstruct
     public void yourTaskMethod() {
-    log.info("---------start------------");
+    log.info("---------start-----------123321-");
         try {
             MultiValueMap headers = new LinkedMultiValueMap<>();
             headers.add("x-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MmZjNDFlOWFhNjFiNWI4MWRmYjc4MCIsImlhdCI6MTcxMjExMjI1NywiZXhwIjoxNzEyNzE3MDU3fQ.FR6s4HkEgs5ff2gVnv-UiKCdxYuiLGEM3rT8UGqwjBw");
@@ -72,7 +72,7 @@ public class T2ServiceImpl {
             }
             Date date = org.apache.commons.lang3.time.DateUtils.addDays(new Date(), -1);
             String dateStr = DateUtils.format(date, "yyyyMMdd");
-            //todo 刪除當天數據在進行加入
+            //todo 刪除當天數據在進行加入 加油  这个t2 已经挂了
 
             JSONObject jsonObject1 = jsonObject.getJSONObject("result");
             JSONArray users = jsonObject1.getJSONArray("ranks");
