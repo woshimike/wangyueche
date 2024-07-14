@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class T2ServiceImplTest {
     @Test
     public void name1() {
+
     }
 
     @Test
