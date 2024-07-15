@@ -8,9 +8,12 @@ import java.io.IOException;
 
 public class FileReadWriteExample {
     public static void main(String[] args) {
-        String inputFileName = "input.txt";
-        String outputFileName = "output.txt";
-
+        String inputFileName = "input123231231123.txt";
+        String outputFileName = "outpu123123t.txt";
+        /**
+         *
+         * sdfjlsdjf
+         */
         try (BufferedReader br = new BufferedReader(new FileReader(inputFileName));
              BufferedWriter bw = new BufferedWriter(new FileWriter(outputFileName))) {
 
