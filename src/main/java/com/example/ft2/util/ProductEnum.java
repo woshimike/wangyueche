@@ -2,11 +2,23 @@ package com.example.ft2.util;
 
 public enum ProductEnum {
     //上线的时候需要删除测试产品
-    //PRODUCT_0(0L,"1",30,"产品1"),
+    PRODUCT_0(0L,"1",30,"产品1"),
     PRODUCT_1(1L,"600",60,"产品1"),
     PRODUCT_2(2L,"4500",600,"产品2"),
     PRODUCT_3(3L,"20000",3000,"产品3"),
-    PRODUCT_4(4L,"29900",6000,"产品4");
+    PRODUCT_4(4L,"29900",6000,"产品4"),
+
+    PRODUCT_5(5L,"299000",9000,"产品5"),
+
+    PRODUCT_6(6L,"29900",6000,"产品4"),
+
+    PRODUCT_7(7L,"29900",6000,"产品4"),
+
+    PRODUCT_8(8L,"29900",6000,"产品4"),
+
+    PRODUCT_9(9L,"29900",6000,"产品4"),
+
+    PRODUCT_10(10L,"29900",6000,"产品4");
 
 
     private Long id;
