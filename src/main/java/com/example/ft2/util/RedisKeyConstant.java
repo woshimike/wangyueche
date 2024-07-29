@@ -5,6 +5,8 @@ package com.example.ft2.util;
 public class RedisKeyConstant {
     //上一次心跳前缀
     public static String lastKey = "last_";
+    //上一次心跳前缀
+    public static String nextKey = "next_";
     //剩余时间前缀
     public static String leftKey = "left_";
     //房间号
