@@ -32,5 +32,14 @@ public class EthLandVo {
     //出价人地址
     @Excel(name = "offer_address",width= 30,height = 30)
     private String offerAddress;
+    //出价人地址2
+    @Excel(name = "offer_address",width= 30,height = 30)
+    private String offerAddress2;
+    //出价人地址3
+    @Excel(name = "offer_address",width= 30,height = 30)
+    private String offerAddress3;
+    //出价人地址4
+    @Excel(name = "offer_address",width= 30,height = 30)
+    private String offerAddress4;
 
 }
