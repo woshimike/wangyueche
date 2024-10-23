@@ -12,7 +12,7 @@ public class FileReadWriteExample {
         String outputFileName = "outpu123123t.txt";
         /**
          *
-         * sdfjlsdjf
+         * sdfjlsdjf加点住是吧
          */
         try (BufferedReader br = new BufferedReader(new FileReader(inputFileName));
              BufferedWriter bw = new BufferedWriter(new FileWriter(outputFileName))) {
