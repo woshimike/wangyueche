@@ -462,13 +462,6 @@ public final class DateUtils {
         return startTime;
     }
 
-    public static String getFirstDayOfLastMonthDay() {
-        LocalDate today = LocalDate.now();
-        LocalDate firstDayOfThisMonth = today.withDayOfMonth(1);
-        LocalDate firstDayOfLastMonth = firstDayOfThisMonth.minusMonths(1);
-        return firstDayOfLastMonth.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    }
-
     public static String getLastDayOfLastMonthDay() {
         LocalDate today = LocalDate.now();
         LocalDate firstDayOfThisMonth = today.withDayOfMonth(1);
@@ -476,11 +469,6 @@ public final class DateUtils {
         return lastDayOfLastMonth.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
-    public static String getFirstDayOfThisMonth() {
-        LocalDate today = LocalDate.now();
-        LocalDate firstDayOfThisMonth = today.withDayOfMonth(1);
-        return firstDayOfThisMonth.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    }
 
     public static String getLastDayOfThisMonth() {
         LocalDate today = LocalDate.now();
