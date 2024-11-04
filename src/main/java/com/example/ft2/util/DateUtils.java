@@ -462,16 +462,6 @@ public final class DateUtils {
         return startTime;
     }
 
-
-
-    public static String getLastDayOfPreviousMonth() {
-        LocalDate today = LocalDate.now();
-        LocalDate firstDayOfThisMonth = today.withDayOfMonth(1);
-        LocalDate lastDayOfPreviousMonth = firstDayOfThisMonth.minusDays(1);
-        LocalDateTime lastSecondOfLastDayOfPreviousMonth = lastDayOfPreviousMonth.atTime(23, 59, 59);
-        return lastSecondOfLastDayOfPreviousMonth.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
-
     public static String getTodayStartTime() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime todayStart = now.withHour(0).withMinute(0).withSecond(0).withNano(0);
