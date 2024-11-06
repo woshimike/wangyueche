@@ -462,12 +462,6 @@ public final class DateUtils {
         return startTime;
     }
 
-    public static String getTodayStartTime() {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime todayStart = now.withHour(0).withMinute(0).withSecond(0).withNano(0);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return todayStart.format(formatter);
-    }
     //以获得所需格式的下个月的第一天
     public static String getNextMonthFirstDay() {
         LocalDate nextMonth = LocalDate.now().plusMonths(1);
@@ -476,8 +470,5 @@ public final class DateUtils {
         return firstDayDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-    public static void main(String[] args) {
-        System.out.println(getTodayStartTime());
-    }
 
 }
