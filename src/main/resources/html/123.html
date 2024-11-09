@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>查询钱包余额</title>
+    <script>	
+	
+	   
+	   function allMethod(){
+	   var walletAddress = document.getElementById("address").value;
+			getEraEth(walletAddress);
+			getEraTxCount(walletAddress);
+			getEraLastTX(walletAddress);
+	   }
+	   
+       function getEraEth(walletAddress) {
+	        
+			var url = "https://zksync2-mainnet.zksync.io";
+			var param = JSON.stringify({
+				  "jsonrpc": "2.0",
+				  "method": "eth_getBalance",
+				  "params": [walletAddress, "latest"],
+				  "id": 1
+				});
+			
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					if (xhr.status == 200) {
+					   const result = JSON.parse(xhr.responseText);
+					   const balance = result.result;
+		
+					   document.all("data_table").rows[0].cells[1].innerText = parseInt(balance, 16) / 10 ** 18;
+					   //alert(parseInt(balance, 16) / 10 ** 18);
+					}
+				}
+			};
+			
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-type", "application/json");
+			xhr.send(param);
+		}
+		
+		// 查询地址在 zkSync Era tx 数量
+		function getEraTxCount(walletAddress) {
+			var url = "https://zksync2-mainnet.zksync.io";
+			var param = JSON.stringify({
+				  "jsonrpc": "2.0",
+				  "method": "eth_getTransactionCount",
+				  "params": [walletAddress, "latest"],
+				  "id": 1
+				});
+			
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					if (xhr.status == 200) {
+					   const result = JSON.parse(xhr.responseText);
+					   const transactionCountHex = result.result;
+		
+					   document.all("data_table").rows[1].cells[1].innerText = parseInt(transactionCountHex, 16);
+					   //alert(parseInt(balance, 16) / 10 ** 18);
+					}
+				}
+			};
+			
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-type", "application/json");
+			xhr.send(param);
+		}
+		
+		// 获取地址在 Era 最后一次 tx 距今时长
+		function getEraLastTX(walletAddress) {
+			var url = "https://block-explorer-api.mainnet.zksync.io/transactions?limit=1&address=" + walletAddress;
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					if (xhr.status == 200) {
+					   const result = JSON.parse(xhr.responseText);
+					   
+					   if (result.meta.totalItems === 0) {
+						  alert(1); // 此处意味着钱包地址无交易
+						} else {
+						  const lastTxDatetime = result.items[0].receivedAt;
+						  const date = new Date(lastTxDatetime);
+						  const now = new Date();
+						  const diff = now - date;
+						  const diffInDays = (diff / (1000 * 60 * 60 * 24)).toFixed(1);
+						  document.all("data_table").rows[2].cells[1].innerText = diffInDays;		  
+						}			   
+					
+					}
+				}
+			};
+			
+			xhr.open("GET", url);
+			xhr.send();
+		}
+		
+		
+
+	</script>
+</head>
+<body>
+    <h1>查询钱包余额</h1>
+    <p>输入钱包地址：</p><input id="address"></input>
+    <button onclick="allMethod()">查询</button>
+	<table width="60%" id="data_table" border="1"> 
+		<tr> 
+			<td>余额</td> 
+			<td></td> 
+		</tr> 
+		<tr> 
+			<td>总交易数</td> 
+			<td></td> 
+		</tr> 
+		<tr> 
+			<td>最后一次 tx 距今时长(天)</td> 
+			<td></td> 
+		</tr> 
+	</table> 
+</body>
+</html>

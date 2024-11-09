@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>获取eth最新价格</title>
+    <script>	
+	
+	   // 初始化 vConsole
+  	   const vConsole = new VConsole();
+
+		// 获取以太最新的价格
+		function getEthLastPrice(maxPrice) {
+			var maxPrice = document.getElementById("maxPrice").value;
+			var url = "https://api.etherscan.io/api?module=stats&action=ethprice&apikey=4WFSZ4H2GRG1BZ58BAXS2KWT1WNGGG85TG";
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					if (xhr.status == 200) {
+					   	const result = JSON.parse(xhr.responseText);
+						console.log(result.result.ethusd);
+					   if(result.result.ethusd > maxPrice) {
+					   		alert("起床了！！！！！！");
+					   }
+					}
+				}
+			};
+			xhr.open("GET", url);
+			xhr.send();
+			setTimeout("getEthLastPrice()",1000 );
+		}
+	</script>
+</head>
+<body>
+    <h1>查询钱包余额</h1>
+    <p>输入以太价格上限：</p><input id="maxPrice"></input>
+    <button onclick="getEthLastPrice()">查询</button>
+	<button onclick="clearTime()">结束</button>
+	<table width="60%" id="data_table" border="1"> 
+		<tr> 
+			<td>余额</td> 
+			<td></td> 
+		</tr> 
+	</table>
+</body>
+</html>

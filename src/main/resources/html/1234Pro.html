@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>查询钱包余额</title>
+	<script>
+	
+		var Cookie = {
+			set: function (key, value, exdays) {
+				let exdate = new Date() // 获取时间
+				exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays) // 保存的天数
+				// 字符串拼接cookie
+				// eslint-disable-next-line camelcase
+				alert(1);
+				window.document.cookie = key + '=' + value + ';path=/;expires=' + exdate.toGMTString()
+			},
+			
+			get: function (key) {
+			alert(document.cookie.length);
+				if (document.cookie.length > 0) {
+					var arr = document.cookie.split('; ') // 这里显示的格式需要切割一下自己可输出看下
+					alert(arr.length);
+					for (let i = 0; i < arr.length; i++) {
+						let arr2 = arr[i].split('=') // 再次切割
+						// 判断查找相对应的值
+						alert(arr2);
+						if (arr2[0] === key) {
+							return arr2[1]
+						}
+					}
+				}
+			},
+		 
+			remove: function (key) {
+				set(key, '', -1);
+			}
+		};
+    	
+	
+	   var hxj_table = {
+		headers:{},
+		data:[],
+		style:{
+			table:{
+				width:'auto',
+				height:'auto',
+				border:'1px solid #cdcdcd',
+				fontWeight:'normal'
+			},
+			th:{
+				fontSize:'20px',
+				fontWeight:'bold',
+				width:'auto',
+				height:'auto',
+			},
+			td:{
+				fontSize:'16px',
+				fontWeight:'normal',
+				textAlign:'center'
+			}
+		},
+		//1.初始化表格数据
+		init:function(headers,data,style){
+				try{
+						if(headers != null){
+							this.headers = headers;
+						}
+						if(data != null){
+							this.data = data;
+						}
+						if(style != null){
+							this.style = style;
+						}
+					}catch(e){
+						console.error(e);
+					}
+					console.log("init...");
+			 	return this;
+	  },
+	  //2.显示数据
+	  show:function(id){
+	  	try{
+	  		if(id == null){
+	  			id = "demo";
+	  			document.write("<div id='demo'><div>");
+	  		}
+	  		var table = "";
+	  		table += "<table id='data_table' style='border-color: red;border-style:solid; width:"+this.style.table.width+";height:"+this.style.table.height+";border:"+this.style.table.border+";font-weight:"+this.style.table.fontWeight+"'>";
+	  		if(this.headers!=null){
+	  			 table += "<tr style='border-style:solid'>";
+	  			 for(let header in this.headers){
+	  			 	 table += "<th style='border-style:solid;font-size:"+this.style.th.fontSize+";font-weight:"+this.style.th.fontWeight+";width:"+this.style.th.width+";height:"+this.style.th.height+"'>" + this.headers[header] + "</th>";
+	  			 }
+	  			 table += "</tr>";
+	  		}
+	  		if(this.data!=null){
+	  			 
+	  			 for(let tr in this.data){
+	  			 	 table += "<tr>";
+	  			 	 for(let td in this.data[tr]){
+		  			 	 table += "<td style='border-style:solid;font-size:"+this.style.td.fontSize+";font-weight:"+this.style.td.fontWeight+";text-align:"+this.style.td.textAlign+"'>" + this.data[tr][td] + "</td>";
+	  			 
+		  			 }
+	  			 	 table += "</tr>";
+	  			 }
+	  			 
+	  		}
+	  		table += "</table>";
+	  		document.getElementById(id).innerHTML = table;
+	  		console.log("success!");
+		  }catch(e){
+		  	console.error(e);
+		  }
+	  }
+	};	
+		
+		function allMethod(){
+			var addressList = document.getElementById("addressList").value;
+			Cookie.set("addressList",addressList,30);
+			Cookie.get("addressList");
+			
+			let addressArr = addressList.split('\n');  // 以回车为分隔符，将字符串分隔成数组
+			var rowNum = 1;
+			
+			var arrLen = addressArr.length;
+			if(addressArr[0] == '请输入地址，多地址换行') {
+				arrLen--;
+			}
+			
+			var data = new Array(arrLen);
+			for(let i=0;i<addressArr.length;i++){
+			  var address = addressArr[i];
+			  if(address == '请输入地址，多地址换行') {
+				continue;
+			  }
+			  data[i] = {address:address,name:'0',age:'0',high:'0'};
+			  
+			}
+			let headers = {address:'address',name:'余额',age:'总交易数',high:'最后一次 tx 距今时长(天)'};
+			let style;
+			hxj_table.init(headers,data,style).show("demo");
+			
+			
+			for(let i=0;i<addressArr.length;i++){
+			  var address = addressArr[i];
+			  if(address == '请输入地址，多地址换行') {
+				continue;
+			  }
+			  operation(address,rowNum);
+			  rowNum++;
+			}
+			
+			
+		}
+		
+		
+	  function operation(walletAddress,rowNum) {	 
+		 
+		 getEraEth(walletAddress,rowNum);
+		 getEraTxCount(walletAddress,rowNum);
+		 getEraLastTX(walletAddress,rowNum);
+            
+        }
+   
+	   
+       function getEraEth(walletAddress,rowNum) {
+	        
+			var url = "https://zksync2-mainnet.zksync.io";
+			var param = JSON.stringify({
+				  "jsonrpc": "2.0",
+				  "method": "eth_getBalance",
+				  "params": [walletAddress, "latest"],
+				  "id": 1
+				});
+			
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					if (xhr.status == 200) {
+					   const result = JSON.parse(xhr.responseText);
+					   const balance = result.result;
+					   document.all("data_table").rows[rowNum].cells[1].innerText = parseInt(balance, 16) / 10 ** 18;
+					}
+				}
+			};
+			
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-type", "application/json");
+			xhr.send(param);
+		}
+		
+		// 查询地址在 zkSync Era tx 数量
+		function getEraTxCount(walletAddress,rowNum) {
+			var url = "https://zksync2-mainnet.zksync.io";
+			var param = JSON.stringify({
+				  "jsonrpc": "2.0",
+				  "method": "eth_getTransactionCount",
+				  "params": [walletAddress, "latest"],
+				  "id": 1
+				});
+			
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					if (xhr.status == 200) {
+					   const result = JSON.parse(xhr.responseText);
+					   const transactionCountHex = result.result;		
+					   document.all("data_table").rows[rowNum].cells[2].innerText = parseInt(transactionCountHex, 16);
+					}
+				}
+			};
+			
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-type", "application/json");
+			xhr.send(param);
+		}
+		
+		// 获取地址在 Era 最后一次 tx 距今时长
+		function getEraLastTX(walletAddress,rowNum) {
+			var url = "https://block-explorer-api.mainnet.zksync.io/transactions?limit=1&address=" + walletAddress;
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					if (xhr.status == 200) {
+					   const result = JSON.parse(xhr.responseText);
+					   
+					   if (result.meta.totalItems === 0) {
+						  alert(1); // 此处意味着钱包地址无交易
+						} else {
+						  const lastTxDatetime = result.items[0].receivedAt;
+						  const date = new Date(lastTxDatetime);
+						  const now = new Date();
+						  const diff = now - date;
+						  const diffInDays = (diff / (1000 * 60 * 60 * 24)).toFixed(1);
+						  document.all("data_table").rows[rowNum].cells[3].innerText = diffInDays;	  
+						}			   
+					}
+				}
+			};
+			
+			xhr.open("GET", url);
+			xhr.send();
+		}
+		
+		function sleep(time){
+		 var timeStamp = new Date().getTime();
+		 var endTime = timeStamp + time;
+		 while(true){
+		 if (new Date().getTime() > endTime){
+		  return;
+		 } 
+		}}
+		
+		
+		
+		
+		window.onload=function(){
+			var addressListCookie = Cookie.get("addressList");
+			document.getElementById("addressList").value(addressListCookie);
+		}
+
+
+		
+
+	</script>
+</head>
+<body>
+    <h1>查询钱包余额</h1>
+    <p>输入钱包地址：</p>
+	<textarea id="addressList" rows="10" cols="100" value="请输入地址，多地址换行">请输入地址，多地址换行</textarea>
+    <button onclick="allMethod()">查询</button>	
+    <div id="demo"></div></div>
+</body>
+</html>
