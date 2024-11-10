@@ -11,8 +11,8 @@
   	   const vConsole = new VConsole();
 
 		// 获取以太最新的价格
-		function getEthLastPrice(maxPrice) {
-			var maxPrice = document.getElementById("maxPrice").value;
+		function getEthLastPrice() {
+			var minPrice = document.getElementById("minPrice").value;
 			var url = "https://api.etherscan.io/api?module=stats&action=ethprice&apikey=4WFSZ4H2GRG1BZ58BAXS2KWT1WNGGG85TG";
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
@@ -20,7 +20,7 @@
 					if (xhr.status == 200) {
 					   	const result = JSON.parse(xhr.responseText);
 						console.log(result.result.ethusd);
-					   if(result.result.ethusd > maxPrice) {
+					   if(result.result.ethusd < minPrice) {
 					   		alert("起床了！！！！！！");
 					   }
 					}
@@ -30,11 +30,26 @@
 			xhr.send();
 			setTimeout("getEthLastPrice()",1000 );
 		}
+
+		const audio = document.getElementById("myAudio");
+
+		function playAudio() {
+			audio.play();
+		}
+
+		function pauseAudio() {
+			audio.pause();
+		}
+
+		function stopAudio() {
+			audio.pause();
+			audio.currentTime = 0; // 将音频时间重置为 0
+		}
 	</script>
 </head>
 <body>
     <h1>查询钱包余额</h1>
-    <p>输入以太价格上限：</p><input id="maxPrice"></input>
+    <p>输入以太价格下限：</p><input id="minPrice"></input>
     <button onclick="getEthLastPrice()">查询</button>
 	<button onclick="clearTime()">结束</button>
 	<table width="60%" id="data_table" border="1"> 
@@ -43,5 +58,12 @@
 			<td></td> 
 		</tr> 
 	</table>
+
+	<audio id="myAudio" src="E:/Program Files (x86)/Tencent/WeMeet/3.23.3.403/resources/raw/ringing_short.mp3"></audio>
+	<button onclick="playAudio()">播放</button>
+	<button onclick="pauseAudio()">暂停</button>
+	<button onclick="stopAudio()">停止</button>
+
+
 </body>
 </html>
