@@ -20,7 +20,7 @@
 					if (xhr.status == 200) {
 					   	const result = JSON.parse(xhr.responseText);
 						console.log(result.result.ethusd);
-					   if(result.result.ethusd < minPrice) {
+					   if(result.result.ethusd > minPrice) {
 					   		alert("起床了！！！！！！");
 					   }
 					}
@@ -34,6 +34,8 @@
 		const audio = document.getElementById("myAudio");
 
 		function playAudio() {
+		alert("起床了！！！！！！");
+		alert("起床了！！！！！！");
 			audio.play();
 		}
 
