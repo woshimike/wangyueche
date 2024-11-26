@@ -17,8 +17,11 @@ public enum ProductEnum {
     PRODUCT_8(8L,"29900",6000,"产品4"),
 
     PRODUCT_9(9L,"29900",6000,"产品4"),
+    PRODUCT_11(11L,"29900",6000,"产品4"),
 
     PRODUCT_10(10L,"29900",6000,"产品4");
+
+
 
 
     private Long id;
