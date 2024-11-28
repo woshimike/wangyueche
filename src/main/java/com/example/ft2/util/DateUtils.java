@@ -490,12 +490,9 @@ public final class DateUtils {
         LocalDateTime firstDayDateTime = LocalDateTime.of(firstDay, LocalTime.MIN);
         return firstDayDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
-    public static String getNextMonthFirstDay5() {
-        LocalDate nextMonth = LocalDate.now().plusMonths(1);
-        LocalDate firstDay = LocalDate.of(nextMonth.getYear(), nextMonth.getMonth(), 1);
-        LocalDateTime firstDayDateTime = LocalDateTime.of(firstDay, LocalTime.MIN);
-        return firstDayDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
+    /**
+     * nihao
+     */
 
 
 
