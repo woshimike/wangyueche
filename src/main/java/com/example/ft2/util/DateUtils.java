@@ -484,6 +484,13 @@ public final class DateUtils {
         return firstDayDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
+    public static String getNextMonthFirstDay10() {
+        LocalDate nextMonth = LocalDate.now().plusMonths(10);
+        LocalDate firstDay = LocalDate.of(nextMonth.getYear(), nextMonth.getMonth(), 1);
+        LocalDateTime firstDayDateTime = LocalDateTime.of(firstDay, LocalTime.MIN);
+        return firstDayDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
 
     /**
      * nihao
