@@ -238,7 +238,7 @@ public class Daily implements Serializable {
     public boolean equals(Object o) {
         if (this == o) {return true;}
         if (o == null || getClass() != o.getClass()) {return false;}
-        DailyData dailyData = (DailyData) o;
+        Daily dailyData = (Daily) o;
         return Objects.equals(id, dailyData.id) && Objects.equals(userNum, dailyData.userNum) && Objects.equals(incrUserNum, dailyData.incrUserNum) && Objects.equals(totalTime, dailyData.totalTime) && Objects.equals(usedNum, dailyData.usedNum) && Objects.equals(rechargeAmount, dailyData.rechargeAmount) && Objects.equals(loginNum, dailyData.loginNum) && Objects.equals(rihuoNum, dailyData.rihuoNum) && Objects.equals(systemTotalTime, dailyData.systemTotalTime) && Objects.equals(createTime, dailyData.createTime);
     }
 
